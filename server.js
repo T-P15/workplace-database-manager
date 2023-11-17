@@ -3,6 +3,7 @@ const viewDepartments = require('./util/viewDepartments')
 const viewEmployees = require('./util/viewEmployees')
 const viewRoles = require('./util/viewRoles')
 const inquirer = require("inquirer")
+const db = require('./util/connection')
 
 function menu(){
     console.log("\n");
@@ -20,6 +21,20 @@ inquirer.prompt(questions)
             case "View employees?": 
             viewEmp();
             break;
+
+            case "Add Department":
+                inquirer.prompt([
+                    {
+                        type: 'input',
+                        name: 'DepartmentTitle',
+                        message: 'what is the title of the department?',
+                    },
+                ]).then((nestedAnswers) =>{
+                    return db.promise().query(`INSERT INTO department (department_name) VALUES ("${nestedAnswers.DepartmentTitle}")`)
+                    .then(([rows]) => {
+                        console.table(rows);
+                        console.log("\n");
+                    })});
         };
     })
 }
