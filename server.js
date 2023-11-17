@@ -35,6 +35,34 @@ inquirer.prompt(questions)
                         console.table(rows);
                         console.log("\n");
                     })});
+            break;
+
+            case "Add Role":
+                inquirer.prompt([
+                    {
+                        type: 'input',
+                        name: 'RoleTitle',
+                        message: 'what is the title of the Role?',
+                    },
+                    {
+                        type: 'number',
+                        name: 'RoleSalary',
+                        message: 'what is the Salary of the Role?',
+                    },
+                    {
+                        type: 'number',
+                        name: 'DepartmentID',
+                        message: 'what is the relative departmentID?'
+                    },
+
+                ]).then((nestedAnswers2) =>{
+                    return db.promise().query(`INSERT INTO roles (roles_title, salary, department)
+                    VALUES ("${nestedAnswers2.RoleTitle}", "${nestedAnswers2.RoleSalary}", ${nestedAnswers2.DepartmentID} );`)
+                    .then(([rows]) => {
+                        console.table(rows);
+                        console.log("\n");
+                    })});
+                break;
         };
     })
 }
