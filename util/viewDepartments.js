@@ -1,10 +1,10 @@
 const db = require('./connection.js')
 
 function showTable(){
-    db.promise().query(`SELECT * FROM department`)
+    return db.promise().query(`SELECT * FROM department`)
     .then(([rows]) => {
        console.table(rows);
-
+       console.log("\n");
    })};
 
    
